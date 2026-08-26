@@ -16,31 +16,49 @@ is green, everything downstream is red. Entry points — anything with no caller
 `Home_Web` page above — are green; dead ends are red. Node shape tells you the document type and
 colour tells you the module.
 
-Requires **Studio Pro 11** (built and tested against 11.12).
-
 ---
 
 ## Install
 
-Download the latest zip from [Releases](https://github.com/Joshua-TOF/find-that-mf/releases) and
-unzip it into your app's `extensions\` folder, so you end up with:
+Two ways. Both need Studio Pro **11** (built and tested against 11.12).
+
+### As an add-on module (one file)
+
+Download `FindThatMF.mxmodule` from
+[Releases](https://github.com/Joshua-TOF/find-that-mf/releases), then in Studio Pro:
+
+1. Right-click your app in **App Explorer** → **Import module package**.
+2. Pick the `.mxmodule`.
+3. Studio Pro asks whether to **trust the extension** it contains. Accept — if you decline, the
+   module imports but the extension never loads.
+
+The module is protected, so nobody can edit or accidentally delete its contents.
+
+### As a folder
+
+Download the zip from the same place and unzip it into your app's `extensions\` folder, so you end
+up with:
 
 ```
 <your-app>\extensions\find-that-mf\manifest.json
 ```
 
-Then launch Studio Pro **with the extension flag**, or it ignores the extension silently — no
-error, no log line, it simply never loads:
+### Either way: extension loading must be enabled
+
+Studio Pro ignores extensions silently unless it is told to load them — no error, no log line, they
+simply never appear. Turn it on once in **Preferences → Advanced → Extension Development**, or
+launch with the flag:
 
 ```
 studiopro.exe "C:\Mendix\MyApp\MyApp.mpr" --enable-extension-development
 ```
 
-`tools\run-studiopro.cmd -Mpr "C:\Mendix\MyApp\MyApp.mpr"` does that for you and finds the newest
-installed Studio Pro 11 by itself.
+`tools\run-studiopro.cmd -Mpr "C:\Mendix\MyApp\MyApp.mpr"` does the latter for you and finds the
+newest installed Studio Pro 11 by itself.
 
-Everyone who opens the app needs the flag and their own copy of that folder — it is not yet
-packaged as an add-on module, which is what would remove both requirements.
+> Whether a *trusted add-on module* still needs this is not something Mendix documents, and it is
+> untested here. If the pane does not appear after importing the module, that setting is the first
+> thing to check.
 
 <details>
 <summary>Or build it from source</summary>
