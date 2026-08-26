@@ -22,19 +22,11 @@ Requires **Studio Pro 11** (built and tested against 11.12).
 
 ## Install
 
-No packaged release yet, so it is a build-and-copy:
+Download the latest zip from [Releases](https://github.com/Joshua-TOF/find-that-mf/releases) and
+unzip it into your app's `extensions\` folder, so you end up with:
 
-```powershell
-cd extension
-npm install
-npm run build
 ```
-
-That deploys into `<app>\extensions\find-that-mf\`. Set `MX_APP_DIR` to choose which app:
-
-```powershell
-$env:MX_APP_DIR = "C:\Mendix\MyApp"
-npm run build
+<your-app>\extensions\find-that-mf\manifest.json
 ```
 
 Then launch Studio Pro **with the extension flag**, or it ignores the extension silently — no
@@ -47,7 +39,26 @@ studiopro.exe "C:\Mendix\MyApp\MyApp.mpr" --enable-extension-development
 `tools\run-studiopro.cmd -Mpr "C:\Mendix\MyApp\MyApp.mpr"` does that for you and finds the newest
 installed Studio Pro 11 by itself.
 
-Anyone else opening the app needs the same flag and their own copy of the deployed folder.
+Everyone who opens the app needs the flag and their own copy of that folder — it is not yet
+packaged as an add-on module, which is what would remove both requirements.
+
+<details>
+<summary>Or build it from source</summary>
+
+```powershell
+cd extension
+npm install
+npm run build
+```
+
+`MX_APP_DIR` picks the app to deploy into; the default is `..\testapp`.
+
+```powershell
+$env:MX_APP_DIR = "C:\Mendix\MyApp"
+npm run build
+```
+
+</details>
 
 ---
 
