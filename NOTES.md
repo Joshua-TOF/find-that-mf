@@ -6,6 +6,61 @@ code or writing an extension of your own — several of these are constraints ra
 
 ---
 
+## Packaging as an add-on module
+
+Studio Pro can wrap an extension into a `.mxmodule` so it installs as one file instead of a folder
+drop. **It does not remove the Extension Development Mode requirement** — see below, which is the
+part worth knowing before spending time on it.
+
+Packaging is a GUI procedure, not a build step; nothing in `build-extension.mjs` can produce it.
+
+1. Deploy the extension normally, so it is loaded as a development extension.
+2. Create a module in the app and name it.
+3. Double-click **Settings** *inside* the module in App Explorer — not the app's Settings, and not
+   the module's right-click context menu, which has no such entry.
+4. **Configure** tab → **Module Type** → **Add-on module**. Mendix's packaging guide says "on the
+   Export tab", which is stale; the type moved to Configure.
+5. Pick the extension from the **Extension name** list.
+6. Right-click the module → **Export add-on module package** → `.mxmodule`.
+
+There is no separate "include the extension" step, despite the documentation's step 2 implying one.
+The dropdown is the inclusion: it writes an `<extensions><extension name="find-that-mf" /></extensions>`
+entry into the package's `package.xml`, and Studio Pro copies `extensions\<name>\` in.
+
+A `.mxmodule` is a zip:
+
+```
+manifest.json                     package id, version, {SHA256} checksum
+package.xml                       the <extension name="..."/> binding and the file list
+project.mpr                       the module's own model
+api.json                          the module's exported API surface
+extensions/find-that-mf/*         the extension bundle, copied verbatim
+themesource/findthatmf/*          empty module theme scaffolding
+```
+
+The manifest carries a **checksum, not a signature**. That is what backs the trust prompt shown on
+import, and it means a locally built `.mxmodule` is a first-class artefact — no code signing and no
+Marketplace publication required.
+
+### The bit Mendix does not document
+
+**A trusted add-on module still needs Extension Development Mode.** Tested on 11.12: import the
+module, accept the trust prompt, open the `.mpr` normally — nothing loads, silently. Tick
+*Start Studio Pro in Extension Development Mode* in **Edit → Preferences… → Advanced** and restart,
+and it works.
+
+So the trust prompt is an extra gate, not a replacement for the setting. Neither the packaging
+guide, the web extensibility pages, the Extensibility API landing page nor the Preferences
+reference states this either way.
+
+What the add-on module *does* buy: a one-file install rather than "unzip into the right folder", and
+a protected module nobody can edit or delete by accident.
+
+Note also that Studio Pro versions the module independently, on that same Configure tab, and starts
+it at 1.0.0 — which is why the extension's own version was moved to 1.0.0 rather than left at 0.1.0.
+
+---
+
 ## Recreating the test app
 
 The test app is **not** in this repository — it is ~19 MB of binary `.mxunit` files that Studio Pro

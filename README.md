@@ -32,7 +32,8 @@ Download `FindThatMF.mxmodule` from
 3. Studio Pro asks whether to **trust the extension** it contains. Accept — if you decline, the
    module imports but the extension never loads.
 
-The module is protected, so nobody can edit or accidentally delete its contents.
+The module is protected, so nobody can edit or accidentally delete its contents. You still need
+the setting below — importing the module is not enough by itself.
 
 ### As a folder
 
@@ -43,22 +44,29 @@ up with:
 <your-app>\extensions\find-that-mf\manifest.json
 ```
 
-### Either way: extension loading must be enabled
+### Either way: turn on Extension Development Mode
 
-Studio Pro ignores extensions silently unless it is told to load them — no error, no log line, they
-simply never appear. Turn it on once in **Preferences → Advanced → Extension Development**, or
-launch with the flag:
+**This is required, including for the add-on module** — tested, not assumed. Importing the module
+and trusting the extension is *not* enough on its own: open the `.mpr` normally and nothing loads.
+Studio Pro stays silent about it too — no error, no log line, the pane simply never appears.
+
+**Edit → Preferences… → Advanced → Extension Development**, tick *Start Studio Pro in Extension
+Development Mode*, and restart.
+
+![Extension Development Mode in Edit → Preferences → Advanced](Preferences.png)
+
+It is a one-time, per-machine setting and it survives restarts, so this is the option to give
+colleagues. The equivalent command-line flag does the same job per launch:
 
 ```
 studiopro.exe "C:\Mendix\MyApp\MyApp.mpr" --enable-extension-development
 ```
 
-`tools\run-studiopro.cmd -Mpr "C:\Mendix\MyApp\MyApp.mpr"` does the latter for you and finds the
-newest installed Studio Pro 11 by itself.
+`tools\run-studiopro.cmd -Mpr "C:\Mendix\MyApp\MyApp.mpr"` does that for you and finds the newest
+installed Studio Pro 11 by itself.
 
-> Whether a *trusted add-on module* still needs this is not something Mendix documents, and it is
-> untested here. If the pane does not appear after importing the module, that setting is the first
-> thing to check.
+So the add-on module buys you a one-file install and a protected module — not freedom from this
+setting. Everyone opening the app needs it either way.
 
 <details>
 <summary>Or build it from source</summary>
