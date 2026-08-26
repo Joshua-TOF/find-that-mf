@@ -1,0 +1,11 @@
+{
+  "mendixComponent": {
+    "entryPoints": {
+      "main": "main.js",
+      "ui": {
+        "pane": "pane.js"
+      }
+    },
+    "supportsHeadless": false
+  }
+}

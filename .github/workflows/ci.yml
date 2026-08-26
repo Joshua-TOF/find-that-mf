@@ -1,0 +1,40 @@
+# Typecheck, test and build on every push.
+#
+# Deliberately does not run `npm run validate`: that one shells out to Studio Pro's `mx.exe` to
+# dump a real .mpr, which no hosted runner has. It stays a local check.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: extension
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: extension/package-lock.json
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Test
+        run: npm test
+
+      # Catches an esbuild-only break that tsc cannot see, such as an entry point renamed in
+      # build-extension.mjs but not in src/manifest.json.
+      - name: Build
+        run: node build-extension.mjs

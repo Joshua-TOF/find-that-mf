@@ -1,0 +1,23 @@
+node_modules/
+extension/dist/
+
+# The Mendix test app is deliberately not in this repository.
+#
+# It is a throwaway `mx create-project` Blank app plus a hand-built fixture graph, and it costs
+# ~19 MB of binary .mxunit files that Studio Pro rewrites every time it opens them — churn in every
+# diff, for something anyone can rebuild in ten minutes. README's "Recreating the test app" says
+# how. `MX_APP_DIR` points the build at wherever you keep yours; ./testapp is the default, which is
+# why the name is reserved here.
+testapp/
+
+# Mendix working files, wherever an app happens to live.
+*.mpr.lock
+*.mpr.bak
+
+# Per-developer Studio Pro state: suppressed recommendations, "don't show this again" flags.
+# Nothing another clone should inherit.
+*.user.json
+
+# Extension diagnostics, written into the app root only when something fails.
+find-that-mf.*.log
+find-that-mf.debug

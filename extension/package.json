@@ -1,0 +1,44 @@
+{
+  "name": "find-that-mf",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Microflow call graph for Mendix Studio Pro: who calls this microflow, what does it call, and is anything calling it at all?",
+  "keywords": [
+    "mendix",
+    "mendix-studio-pro",
+    "mendix-extension",
+    "microflow",
+    "call-graph",
+    "static-analysis"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc --noEmit && node build-extension.mjs",
+    "build:dev": "tsc --noEmit && node build-extension.mjs --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build:cli": "esbuild src/cli/validate.ts --bundle --platform=node --format=esm --outfile=dist/cli/validate.js",
+    "validate": "npm run build:cli && node dist/cli/validate.js"
+  },
+  "dependencies": {
+    "@mendix/extensions-api": "0.11.0-mendix.11.12.0",
+    "cytoscape": "^3.31.0",
+    "cytoscape-fcose": "^2.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/cytoscape": "^3.21.9",
+    "@types/node": "^22.13.10",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "esbuild": "0.25.5",
+    "minimist": "^1.2.8",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9"
+  }
+}

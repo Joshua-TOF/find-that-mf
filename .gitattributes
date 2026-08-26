@@ -1,0 +1,10 @@
+# Mendix model files are SQLite and packed binary. Git detects that on its own, but saying so
+# explicitly means a future `text=auto` rule can never corrupt them by trying to normalise them.
+*.mpr binary
+*.mpr.bak binary
+*.mxunit binary
+
+# Windows-only tooling. cmd is sensitive to line endings around labels and goto, so these must
+# stay CRLF even when committed from a machine that defaults to LF.
+*.cmd text eol=crlf
+*.ps1 text eol=crlf

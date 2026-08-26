@@ -1,0 +1,23 @@
+{
+    // Attaches an Edge/WebView2 debugger to Studio Pro's web views, which is the only way to get a
+    // console, a network tab or a breakpoint inside the pane.
+    //
+    // `runtimeExecutable` is the one machine-specific line: point it at your Studio Pro 11 install.
+    // (tools/run-studiopro.ps1 finds the newest one automatically, but launch.json cannot run code.)
+    // Forward slashes on purpose — VS Code accepts them on Windows and they do not need escaping.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Studio Pro with debugger attached",
+            "type": "msedge",
+            "useWebView": true,
+            "runtimeExecutable": "C:/Program Files/Mendix/11.12.0/modeler/studiopro.exe",
+            "runtimeArgs": [
+                "${workspaceFolder}/../testapp/MfGraphTestApp.mpr",
+                "--enable-extension-development"
+            ],
+            "request": "launch",
+            "webRoot": "${workspaceFolder}/dist/find-that-mf"
+        }
+    ]
+}
