@@ -1,6 +1,6 @@
 {
   "name": "find-that-mf",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "Microflow call graph for Mendix Studio Pro: who calls this microflow, what does it call, and is anything calling it at all?",
