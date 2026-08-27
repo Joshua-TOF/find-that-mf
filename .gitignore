@@ -25,3 +25,6 @@ find-that-mf.debug
 # Exported add-on module packages. Build output, like extension/dist — it belongs
 # on the Releases page, not in git, and it is ~1 MB that would churn every export.
 *.mxmodule
+
+# Session recaps: working notes, not part of the published project.
+recaps/
